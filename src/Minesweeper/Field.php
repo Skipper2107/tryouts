@@ -70,8 +70,11 @@ class Field
         }
         for ($i = $row - 1; $i < $row + 2; $i++) {
             for ($j = $column - 1; $j < $column + 2; $j++) {
-                if (($j == $column && $i == $row) || !isset($this->cells[$i][$j]) || $this->getCell($i,
-                        $j)->getState() !== Cell::STATE_CLOSED) {
+                if (
+                    ($j == $column && $i == $row)
+                    || !isset($this->cells[$i][$j])
+                    || $this->getCell($i, $j)->getState() !== Cell::STATE_CLOSED
+                ) {
                     continue;
                 }
                 yield $this->cells[$i][$j];

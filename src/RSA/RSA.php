@@ -13,17 +13,20 @@ use App\Evklid\Evklid;
 
 class RSA
 {
+    /** @var int $p1*/
     private $p1 = 53;
+    /** @var int $p2 */
     private $p2 = 59;
+    /** @var int $complexity */
     private $complexity = 2;
 
     /**
      * @param int $p1
      * @return $this
      */
-    public function setControl1($p1)
+    public function setControl1(int $p1): RSA
     {
-        $this->p1 = (int)$p1;
+        $this->p1 = $p1;
         return $this;
     }
 
@@ -31,9 +34,9 @@ class RSA
      * @param int $p2
      * @return $this
      */
-    public function setControl2($p2)
+    public function setControl2(int $p2): RSA
     {
-        $this->p2 = (int)$p2;
+        $this->p2 = $p2;
         return $this;
     }
 
@@ -61,10 +64,10 @@ class RSA
     }
 
     /**
-     * @return float|int
+     * @return int
      * @throws \Exception
      */
-    private function generateFi()
+    private function generateFi(): int
     {
         if (Evklid::gcd($this->p1, $this->p2) != 1) {
             throw new \Exception('Numbers are not simple');
@@ -72,7 +75,7 @@ class RSA
         return ($this->p1 - 1) * ($this->p2 - 1);
     }
 
-    private function generateOpenKey($fi)
+    private function generateOpenKey(int $fi): int
     {
         do {
             $e = rand(3, 11);
@@ -95,7 +98,7 @@ class RSA
      * @return mixed
      * @throws \Exception
      */
-    public function decrypt($data, $openKey, $control)
+    public function decrypt($data, int $openKey, int $control)
     {
         $fi = $this->generateFi();
         $d = $this->generateClosedKey($fi, $openKey);
@@ -103,7 +106,7 @@ class RSA
         return $this->integerToText($data);
     }
 
-    private function generateClosedKey($fi, $openKey)
+    private function generateClosedKey(int $fi, int $openKey)
     {
         return ($this->complexity * $fi + 1) / $openKey;
     }
