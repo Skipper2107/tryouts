@@ -5,12 +5,13 @@ class RpnEncoder
     /**
      * @var array
      */
-    private $stack = [];
+    private $stack;
  
     public function encode(string $expression)
     {
         $result = '';
         $parts = str_split($expression);
+        $this->stack = [];
  
         foreach ($parts as $part) {
             if ($part == '^') {
